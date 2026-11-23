@@ -4,6 +4,7 @@ const express=require("express"), session=require("express-session"), bcrypt=req
 const Database=require("better-sqlite3"), helmet=require("helmet"), rateLimit=require("express-rate-limit");
 const crypto=require("crypto"), path=require("path");
 const app=express(), db=new Database("rewards.db"), PORT=Number(process.env.PORT||3000);
+app.set("trust proxy", 1);
 const GAME_SECRET=process.env.ROBLOX_GAME_SECRET||"", ADMIN_EMAIL=(process.env.ADMIN_EMAIL||"admin@example.com").toLowerCase();
 app.use(helmet({contentSecurityPolicy:false})); app.use(express.json({limit:"20kb"}));
 app.use(session({name:"rewards.sid",secret:process.env.SESSION_SECRET||"unsafe-dev-secret",resave:false,saveUninitialized:false,cookie:{httpOnly:true,sameSite:"lax",secure:process.env.NODE_ENV==="production",maxAge:604800000}}));
